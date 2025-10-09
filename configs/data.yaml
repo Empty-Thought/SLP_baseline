@@ -1,0 +1,18 @@
+dataname: ASL-Citizen
+_target_: datamodule.SMPLXDataModule
+
+# Paths
+data_path: ${path.datasets}/ASL_citizen
+split_path: ${path.datasets}/ASL_citizen
+
+# Text
+
+# Machine
+# batch_size: ${}data
+
+batchsize: ${server.batch_size}
+num_workers: ${server.num_workers}
+data_dir: ""
+sampler: ${sampler}
+defaults:
+  - /transforms.yaml@transforms

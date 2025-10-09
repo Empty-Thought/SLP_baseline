@@ -1,0 +1,33 @@
+hydra:
+  run:
+    dir: outputs/${data.dataname}/${experiment}
+  job: # automatically go to the job folder (needed for hydra > 1.2 with new behavior)
+    chdir: true
+    
+# Global configurations shared between different modules
+experiment: baseline
+
+seed: 1234
+
+logger_level: INFO
+run_id: ${generate_id:}
+
+# Composing nested config with default
+defaults:
+  - data@data
+  - model: temos
+  - server@server
+  - trainer@trainer
+  - sampler: variable_conseq
+  - logger@logger
+  - callback: callback
+  - /path@path
+  # - override hydra/job_logging: rich # custom
+  # - override hydra/hydra_logging: rich # custom
+  - _self_
+
+data:
+  transforms:
+    normalization: false
+
+transforms: ${data.transforms}
