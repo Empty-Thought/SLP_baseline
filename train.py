@@ -38,7 +38,7 @@ def train(cfg: DictConfig) -> None:
     logger.info(f"Data module '{cfg.data.dataname}' loaded")
 
     logger.info("Loading model")
-    print(data_module.nfeats)
+    # print(data_module.nfeats)
     model = instantiate(cfg.model,
                         nfeats=data_module.nfeats,
                         nvids_to_save=None,
@@ -59,7 +59,7 @@ def train(cfg: DictConfig) -> None:
 
     callbacks = [
         # pl.callbacks.RichProgressBar(),
-        # instantiate(cfg.callback.progress, metric_monitor=metric_monitor),
+        instantiate(cfg.callback.progress, metric_monitor=metric_monitor),
         # instantiate(cfg.callback.latest_ckpt),
         # instantiate(cfg.callback.last_ckpt)
     ]

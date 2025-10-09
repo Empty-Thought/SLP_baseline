@@ -2,6 +2,7 @@
 outputs/
 data/
 checkpoints/
+deps/
 
 # Python
 __pycache__/
