@@ -180,7 +180,7 @@ class SignDataset(Dataset):
     def __len__(self):
         return len(self.split_index)
 
-def load_annotation(keyid, datapath, tag='random sequence'):
+def load_annotation(keyid, datapath, tag="raw text from sign book"):
 
     text_datapath = datapath / "text"
 
@@ -195,7 +195,7 @@ def load_annotation(keyid, datapath, tag='random sequence'):
 
     return annotations
 
-def load_smplx(keyid, datapath, tag="random sequence"):
+def load_smplx(keyid, datapath, tag="52d_pose_confidence_0.9"):
 
     datapath = datapath / "motion"
 

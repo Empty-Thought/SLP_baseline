@@ -1,9 +1,9 @@
-dataname: ASL-Citizen
+dataname: ASL-Citizen-confidence-0.9
 _target_: datamodule.SMPLXDataModule
 
 # Paths
-data_path: ${path.datasets}/ASL_citizen
-split_path: ${path.datasets}/ASL_citizen
+data_path: ${path.datasets}/ASL_citizen_confidence_0.9
+split_path: ${path.datasets}/ASL_citizen_confidence_0.9
 
 # Text
 
