@@ -22,12 +22,12 @@ class ComputeMetrices(Metric):
         self.add_state("count_sequence", default=torch.tensor(0.0), dist_reduce_fx="sum")
 
         # APE
-        self.add_state("APE_pose", default=torch.zeros(20), dist_reduce_fx="sum")
+        self.add_state("APE_pose", default=torch.zeros(51), dist_reduce_fx="sum")
         self.add_state("APE_joints", default=torch.zeros(21), dist_reduce_fx="sum")
         self.APE_metrics = ["APE_pose", "APE_joints"]
 
         # AVE
-        self.add_state("AVE_pose", default=torch.zeros(20), dist_reduce_fx="sum")
+        self.add_state("AVE_pose", default=torch.zeros(51), dist_reduce_fx="sum")
         self.add_state("AVE_joints", default=torch.zeros(21), dist_reduce_fx="sum")
         self.AVE_metrics = ["AVE_pose", "AVE_joints"]
 
@@ -58,20 +58,32 @@ class ComputeMetrices(Metric):
 
 
     def update(self, pose_pred, pose_gt, lengths):
+        
 
         self.count += sum(lengths)
         self.count_sequence += len(lengths)
+
+        pose_pred = self.transform(pose_pred)
+        pose_gt = self.transform(pose_gt)
         
         for i in range(len(lengths)):
 
-            self.APE_pose += l2_norm(pose_pred[i], pose_gt[i], dim=1).sum()
+            self.APE_pose += l2_norm(pose_pred[i], pose_gt[i], dim=2).sum(0)
 
             pose_sigma_pred = variance(pose_pred[i], lengths[i], dim=0)
             pose_sigma_gt = variance(pose_gt[i], lengths[i], dim=0)
-            self.AVE_pose += l2_norm(pose_sigma_pred, pose_sigma_gt, dim=0)
 
-    def transform(self, joints, lengths):
+            self.AVE_pose += l2_norm(pose_sigma_pred, pose_sigma_gt, dim=1)
+
+    def transform(self, joints):
         
+        B, T, F = joints.shape
+        J_num = F // 3
+
+        joints = joints.reshape(B, T, J_num, 3)
+
+        return joints
+
 
 
         pass
