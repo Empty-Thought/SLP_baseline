@@ -1,0 +1,29 @@
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+
+seed: 1234
+
+logger_level: INFO
+folder: ???
+
+split: 
+
+number_of_samples: 1
+fact: 1
+
+ckpt_name: epoch=1000-step=1000.ckpt
+ckpt_path: ${get_checkpoint:${folder},${ckpt_name}}
+
+gender: neutral
+
+defaults:
+  - data: null
+  - machine: null
+  - trainer: null
+  - sample: all_conseq
+  - /path@path
+  - _self_
+
+data.batch_size: 1
